@@ -24,6 +24,7 @@ public class CommandJobHandler extends IJobHandler {
         String command = param;
         int exitValue = -1;
 
+        StringBuilder sb = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
             // command process
@@ -34,6 +35,8 @@ public class CommandJobHandler extends IJobHandler {
             // command log
             String line;
             while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+                sb.append("<br />");
                 XxlJobLogger.log(line);
             }
 
@@ -51,7 +54,8 @@ public class CommandJobHandler extends IJobHandler {
         if (exitValue == 0) {
             return IJobHandler.SUCCESS;
         } else {
-            return new ReturnT<String>(IJobHandler.FAIL.getCode(), "command exit value("+exitValue+") is failed");
+            //return new ReturnT<String>(IJobHandler.FAIL.getCode(), "command exit value("+exitValue+") is failed");
+            return new ReturnT<String>(IJobHandler.FAIL.getCode(), sb.toString());
         }
     }
 
