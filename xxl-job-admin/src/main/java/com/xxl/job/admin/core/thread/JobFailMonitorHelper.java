@@ -182,34 +182,33 @@ public class JobFailMonitorHelper {
 					info.getJobDesc(),
 					alarmContent);
 
+//			Set<String> emailSet = new HashSet<String>(Arrays.asList(info.getAlarmEmail().split(",")));
+//			for (String email: emailSet) {
+//
+//				// make mail
+//				try {
+//					MimeMessage mimeMessage = XxlJobAdminConfig.getAdminConfig().getMailSender().createMimeMessage();
+//
+//					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//					helper.setFrom(XxlJobAdminConfig.getAdminConfig().getEmailUserName(), personal);
+//					helper.setTo(email);
+//					helper.setSubject(title);
+//					helper.setText(content, true);
+//
+//					XxlJobAdminConfig.getAdminConfig().getMailSender().send(mimeMessage);
+//				} catch (Exception e) {
+//					logger.error(">>>>>>>>>>> xxl-job, job fail alarm email send error, JobLogId:{}", jobLog.getId(), e);
+//
+//					alarmResult = false;
+//				}
+//
+//			}
+
+			//推送至钉钉机器人（此处用email代替钉钉机器人token）
 			Set<String> emailSet = new HashSet<String>(Arrays.asList(info.getAlarmEmail().split(",")));
 			for (String email: emailSet) {
-
-				// make mail
 				try {
-					MimeMessage mimeMessage = XxlJobAdminConfig.getAdminConfig().getMailSender().createMimeMessage();
-
-					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-					helper.setFrom(XxlJobAdminConfig.getAdminConfig().getEmailUserName(), personal);
-					helper.setTo(email);
-					helper.setSubject(title);
-					helper.setText(content, true);
-
-					XxlJobAdminConfig.getAdminConfig().getMailSender().send(mimeMessage);
-				} catch (Exception e) {
-					logger.error(">>>>>>>>>>> xxl-job, job fail alarm email send error, JobLogId:{}", jobLog.getId(), e);
-
-					alarmResult = false;
-				}
-
-			}
-
-			//推送至钉钉机器人
-			String dingTokenString=XxlJobAdminConfig.getAdminConfig().getDingToken();
-			if (dingTokenString!=null && dingTokenString != ""){
-				Set<String> dingTokenSet = new HashSet<String>(Arrays.asList(dingTokenString.split(",")));
-				for (String dingToken: dingTokenSet) {
-					DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token="+dingToken);
+					DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token="+email);
 					OapiRobotSendRequest request = new OapiRobotSendRequest();
 					request.setMsgtype("text");
 					OapiRobotSendRequest.Text text = new OapiRobotSendRequest.Text();
@@ -221,7 +220,12 @@ public class JobFailMonitorHelper {
 					text.setContent(dingContent);
 					request.setText(text);
 					OapiRobotSendResponse response = client.execute(request);
+				} catch (Exception e) {
+					logger.error(">>>>>>>>>>> xxl-job, job fail alarm email send error, JobLogId:{}", jobLog.getId(), e);
+
+					alarmResult = false;
 				}
+
 			}
 		}
 
