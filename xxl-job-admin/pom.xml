@@ -66,7 +66,22 @@
 			<artifactId>xxl-job-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.dingtalk</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jar/taobao-sdk-java-auto_1479188381469-20190809.jar</systemPath>
+		</dependency>
 
+
+		<dependency>
+			<groupId>com.dingtalk.source</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jar/taobao-sdk-java-auto_1479188381469-20190809-source.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -99,6 +114,13 @@
 							<include>${project.build.finalName}.jar</include>
 						</resource>
 					</resources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
 		</plugins>

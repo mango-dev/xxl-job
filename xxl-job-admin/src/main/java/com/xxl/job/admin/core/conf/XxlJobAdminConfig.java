@@ -40,6 +40,9 @@ public class XxlJobAdminConfig implements InitializingBean{
     @Value("${spring.mail.username}")
     private String emailUserName;
 
+    @Value("${spring.ding.token}")
+    private  String dingToken;
+
     // dao, service
 
     @Resource
@@ -68,6 +71,11 @@ public class XxlJobAdminConfig implements InitializingBean{
 
     public String getEmailUserName() {
         return emailUserName;
+    }
+
+    public  String getDingToken(){
+
+        return  dingToken;
     }
 
     public XxlJobLogDao getXxlJobLogDao() {

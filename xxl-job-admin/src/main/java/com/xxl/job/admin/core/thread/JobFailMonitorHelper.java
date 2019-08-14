@@ -1,5 +1,10 @@
 package com.xxl.job.admin.core.thread;
 
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiRobotSendRequest;
+import com.dingtalk.api.response.OapiRobotSendResponse;
+import com.taobao.api.ApiException;
 import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
@@ -139,12 +144,20 @@ public class JobFailMonitorHelper {
 			"   </tbody>\n" +
 			"</table>";
 
+	// dingding alarm template
+	private static final String dingBodyTemplate =  I18nUtil.getString("jobinfo_field_jobgroup") +":{0}\r\n"
+			+ I18nUtil.getString("jobinfo_field_id") +":{1}\r\n"
+			+ I18nUtil.getString("jobinfo_field_jobdesc") +":{2}\r\n"
+			+ I18nUtil.getString("jobconf_monitor_alarm_title") +":" +I18nUtil.getString("jobconf_monitor_alarm_type")+"\r\n"
+			+ I18nUtil.getString("jobconf_monitor_alarm_content") +":{3}";
+
+
 	/**
 	 * fail alarm
 	 *
 	 * @param jobLog
 	 */
-	private boolean failAlarm(XxlJobInfo info, XxlJobLog jobLog){
+	private boolean failAlarm(XxlJobInfo info, XxlJobLog jobLog) throws ApiException {
 		boolean alarmResult = true;
 
 		// send monitor email
@@ -189,6 +202,26 @@ public class JobFailMonitorHelper {
 					alarmResult = false;
 				}
 
+			}
+
+			//推送至钉钉机器人
+			String dingTokenString=XxlJobAdminConfig.getAdminConfig().getDingToken();
+			if (dingTokenString!=null && dingTokenString != ""){
+				Set<String> dingTokenSet = new HashSet<String>(Arrays.asList(dingTokenString.split(",")));
+				for (String dingToken: dingTokenSet) {
+					DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token="+dingToken);
+					OapiRobotSendRequest request = new OapiRobotSendRequest();
+					request.setMsgtype("text");
+					OapiRobotSendRequest.Text text = new OapiRobotSendRequest.Text();
+					String dingContent=MessageFormat.format(dingBodyTemplate,
+							group!=null?group.getTitle():"null",
+							info.getId(),
+							info.getJobDesc(),
+							alarmContent.replace("<br>","\r\n").replace("<span style=\"color:#00c0ef;\" > >>>>>>>>>>>","【").replace("<<<<<<<<<<< </span>","】"));
+					text.setContent(dingContent);
+					request.setText(text);
+					OapiRobotSendResponse response = client.execute(request);
+				}
 			}
 		}
 
