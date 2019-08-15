@@ -1,0 +1,15 @@
+[Unit]
+Description=xxl-job-admin daemon
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/opt/xxl-job-admin/xxl-job-admin.pid
+WorkingDirectory=/opt/xxl-job-admin
+ExecStart=/opt/xxl-job-admin/xxl-job-admin.sh start
+ExecReload=/opt/xxl-job-admin/xxl-job-admin.sh restart
+ExecStop=/opt/xxl-job-admin/xxl-job-admin.sh stop
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

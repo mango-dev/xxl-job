@@ -1,0 +1,15 @@
+[Unit]
+Description=xxl-job-executor daemon
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/opt/xxl-job-executor/xxl-job-executor.pid
+WorkingDirectory=/opt/xxl-job-executor
+ExecStart=/opt/xxl-job-executor/xxl-job-executor.sh start
+ExecReload=/opt/xxl-job-executor/xxl-job-executor.sh restart
+ExecStop=/opt/xxl-job-executor/xxl-job-executor.sh stop
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

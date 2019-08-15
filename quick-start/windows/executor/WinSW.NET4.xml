@@ -1,0 +1,7 @@
+<configuration>
+  <id>xxl-job-executor</id>
+  <name>xxl-job-executor</name>
+  <description>xxl-job-executor</description>
+  <executable>C:/Program Files/Java/jdk1.8.0_212/bin/java.exe</executable>
+  <arguments>-jar xxl-job-executor-sample-springboot-2.1.0.jar --server.port=8081 --xxl.job.admin.addresses=http://<host>:<port>/xxl-job-admin --xxl.job.executor.appname=<executor app name> --xxl.job.executor.ip=<local ip> --xxl.job.executor.port=9999</arguments>
+</configuration>
