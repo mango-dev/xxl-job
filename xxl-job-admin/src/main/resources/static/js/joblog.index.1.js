@@ -91,106 +91,113 @@ $(function() {
 	    "searching": false,
 	    "ordering": false,
 	    //"scrollX": false,
-	    "columns": [
-					{
-						"data": 'jobId',
-						"visible" : true,
-                        "width":'10%',
-						"render": function ( data, type, row ) {
+	    "columns":[
+			{
+				"data": 'jobId',
+				"visible" : true,
+				"width":'5%',
+				"render": function ( data, type, row ) {
 
-							var jobhandler = '';
-                            if (row.executorHandler) {
-                                jobhandler = "<br>JobHandler：" + row.executorHandler;
-                            }
+					var jobhandler = '';
+					if (row.executorHandler) {
+						jobhandler = "<br>JobHandler：" + row.executorHandler;
+					}
 
-							var temp = '';
-							temp += I18n.joblog_field_executorAddress + '：' + (row.executorAddress?row.executorAddress:'');
-							temp += jobhandler;
-							temp += '<br>'+ I18n.jobinfo_field_executorparam +'：' + row.executorParam;
+					var temp = '';
+					temp += I18n.joblog_field_executorAddress + '：' + (row.executorAddress?row.executorAddress:'');
+					temp += jobhandler;
+					temp += '<br>'+ I18n.jobinfo_field_executorparam +'：' + row.executorParam;
 
-							return '<a class="logTips" href="javascript:;" >'+ row.jobId +'<span style="display:none;">'+ temp +'</span></a>';
-						}
-					},
-					{ "data": 'jobGroup', "visible" : false},
-					{
-						"data": 'triggerTime',
-                        "width":'16%',
-						"render": function ( data, type, row ) {
-							return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
-						}
-					},
-					{
-						"data": 'triggerCode',
-                        "width":'12%',
-						"render": function ( data, type, row ) {
-							var html = data;
-							if (data == 200) {
-								html = '<span style="color: green">'+ I18n.system_success +'</span>';
-							} else if (data == 500) {
-								html = '<span style="color: red">'+ I18n.system_fail +'</span>';
-							} else if (data == 0) {
-                                html = '';
+					return '<a class="logTips" href="javascript:;" >'+ row.jobId +'<span style="display:none;">'+ temp +'</span></a>';
+				}
+			},
+
+			{ "data": 'jobGroup', "visible" : false},
+			{ "data": 'jobDesc',
+				"width":'20%',
+				"render": function ( data, type, row ) {
+					return data;
+				}
+			},
+			{
+				"data": 'triggerTime',
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
+				}
+			},
+			{
+				"data": 'triggerCode',
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					var html = data;
+					if (data == 200) {
+						html = '<span style="color: green">'+ I18n.system_success +'</span>';
+					} else if (data == 500) {
+						html = '<span style="color: red">'+ I18n.system_fail +'</span>';
+					} else if (data == 0) {
+						html = '';
+					}
+					return html;
+				}
+			},
+			{
+				"data": 'triggerMsg',
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					return data?'<a class="logTips" href="javascript:;" >'+ I18n.system_show +'<span style="display:none;">'+ data +'</span></a>':I18n.system_empty;
+				}
+			},
+			{
+				"data": 'handleTime',
+				"width":'15%',
+				"render": function ( data, type, row ) {
+					return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
+				}
+			},
+			{
+				"data": 'handleCode',
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					var html = data;
+					if (data == 200) {
+						html = '<span style="color: green">'+ I18n.joblog_handleCode_200 +'</span>';
+					} else if (data == 500) {
+						html = '<span style="color: red">'+ I18n.joblog_handleCode_500 +'</span>';
+					} else if (data == 502) {
+						html = '<span style="color: red">'+ I18n.joblog_handleCode_502 +'</span>';
+					} else if (data == 0) {
+						html = '';
+					}
+					return html;
+				}
+			},
+			{
+				"data": 'handleMsg',
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					return data?'<a class="logTips" href="javascript:;" >'+ I18n.system_show +'<span style="display:none;">'+ data +'</span></a>':I18n.system_empty;
+				}
+			},
+			{
+				"data": 'handleMsg' ,
+				"bSortable": false,
+				"width":'10%',
+				"render": function ( data, type, row ) {
+					// better support expression or string, not function
+					return function () {
+						if (row.triggerCode == 200 || row.handleCode != 0){
+							var temp = '<a href="javascript:;" class="logDetail" _id="'+ row.id +'">'+ I18n.joblog_rolling_log +'</a>';
+							if(row.handleCode == 0){
+								temp += '<br><a href="javascript:;" class="logKill" _id="'+ row.id +'" style="color: red;" >'+ I18n.joblog_kill_log +'</a>';
 							}
-                            return html;
+							return temp;
 						}
-					},
-					{
-						"data": 'triggerMsg',
-                        "width":'12%',
-						"render": function ( data, type, row ) {
-							return data?'<a class="logTips" href="javascript:;" >'+ I18n.system_show +'<span style="display:none;">'+ data +'</span></a>':I18n.system_empty;
-						}
-					},
-	                { 
-	                	"data": 'handleTime',
-                        "width":'16%',
-	                	"render": function ( data, type, row ) {
-	                		return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
-	                	}
-	                },
-	                {
-						"data": 'handleCode',
-                        "width":'12%',
-						"render": function ( data, type, row ) {
-                            var html = data;
-                            if (data == 200) {
-                                html = '<span style="color: green">'+ I18n.joblog_handleCode_200 +'</span>';
-                            } else if (data == 500) {
-                                html = '<span style="color: red">'+ I18n.joblog_handleCode_500 +'</span>';
-                            } else if (data == 502) {
-                                html = '<span style="color: red">'+ I18n.joblog_handleCode_502 +'</span>';
-                            } else if (data == 0) {
-                                html = '';
-                            }
-                            return html;
-						}
-	                },
-	                { 
-	                	"data": 'handleMsg',
-                        "width":'12%',
-	                	"render": function ( data, type, row ) {
-	                		return data?'<a class="logTips" href="javascript:;" >'+ I18n.system_show +'<span style="display:none;">'+ data +'</span></a>':I18n.system_empty;
-	                	}
-	                },
-	                {
-						"data": 'handleMsg' ,
-						"bSortable": false,
-                        "width":'10%',
-	                	"render": function ( data, type, row ) {
-	                		// better support expression or string, not function
-	                		return function () {
-		                		if (row.triggerCode == 200 || row.handleCode != 0){
-		                			var temp = '<a href="javascript:;" class="logDetail" _id="'+ row.id +'">'+ I18n.joblog_rolling_log +'</a>';
-		                			if(row.handleCode == 0){
-		                				temp += '<br><a href="javascript:;" class="logKill" _id="'+ row.id +'" style="color: red;" >'+ I18n.joblog_kill_log +'</a>';
-		                			}
-		                			return temp;
-		                		}
-		                		return null;	
-	                		}
-	                	}
-	                }
-	            ],
+						return null;
+					}
+				}
+			}
+		],
         "language" : {
             "sProcessing" : I18n.dataTable_sProcessing ,
             "sLengthMenu" : I18n.dataTable_sLengthMenu ,
