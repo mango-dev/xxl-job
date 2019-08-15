@@ -67,6 +67,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.dingtalk</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -75,6 +82,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${spring-boot.version}</version>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
