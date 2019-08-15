@@ -95,7 +95,7 @@ $(function() {
 					{
 						"data": 'jobId',
 						"visible" : true,
-                        "width":'10%',
+                        "width":'5%',
 						"render": function ( data, type, row ) {
 
 							var jobhandler = '';
@@ -111,10 +111,17 @@ $(function() {
 							return '<a class="logTips" href="javascript:;" >'+ row.jobId +'<span style="display:none;">'+ temp +'</span></a>';
 						}
 					},
+
 					{ "data": 'jobGroup', "visible" : false},
+					{ "data": 'jobDesc',
+						"width":'20%',
+						"render": function ( data, type, row ) {
+							return data;
+						}
+					},
 					{
 						"data": 'triggerTime',
-                        "width":'20%',
+                        "width":'10%',
 						"render": function ( data, type, row ) {
 							return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
 						}
@@ -143,7 +150,7 @@ $(function() {
 					},
 	                { 
 	                	"data": 'handleTime',
-                        "width":'20%',
+                        "width":'15%',
 	                	"render": function ( data, type, row ) {
 	                		return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
 	                	}
