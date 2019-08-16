@@ -13,8 +13,9 @@ public class XxlJobInfo {
 	
 	private int jobGroup;		// 执行器主键ID
 	private String jobCron;		// 任务执行CRON表达式
-	private String jobDesc;
-	
+	private String jobDesc;		//任务描述
+	private  String jobTopic;   //任务描述主题（用于自定义分组）
+
 	private Date addTime;
 	private Date updateTime;
 	
@@ -70,6 +71,14 @@ public class XxlJobInfo {
 
 	public void setJobDesc(String jobDesc) {
 		this.jobDesc = jobDesc;
+	}
+
+	public String getJobTopic() {
+		return jobTopic;
+	}
+
+	public void setJobTopic(String jobTopic) {
+		this.jobTopic = jobTopic;
 	}
 
 	public Date getAddTime() {

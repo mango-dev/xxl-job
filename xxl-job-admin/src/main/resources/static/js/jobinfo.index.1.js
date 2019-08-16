@@ -12,6 +12,7 @@ $(function() {
 	        	var obj = {};
 	        	obj.jobGroup = $('#jobGroup').val();
                 obj.triggerStatus = $('#triggerStatus').val();
+				obj.jobTopic = $('#jobTopic').val();
                 obj.jobDesc = $('#jobDesc').val();
 	        	obj.executorHandler = $('#executorHandler').val();
                 obj.author = $('#author').val();
@@ -43,14 +44,19 @@ $(function() {
 	            			return data;
 	            		}
             		},
+			{
+				"data": 'jobTopic',
+				"visible" : true,
+				"width":'10%'
+			},
 	                {
 	                	"data": 'jobDesc',
 						"visible" : true,
-						"width":'25%'
+						"width":'20%'
 					},
 					{
 						"data": 'glueType',
-						"width":'25%',
+						"width":'20%',
 						"visible" : true,
 						"render": function ( data, type, row ) {
 							var glueTypeTitle = findGlueTypeTitle(row.glueType);
