@@ -422,10 +422,10 @@ $(function() {
 
         var id = $(this).parents('ul').attr("_id");
         var row = tableData['key'+id];
-
 		// base data
 		$("#updateModal .form input[name='id']").val( row.id );
 		$('#updateModal .form select[name=jobGroup] option[value='+ row.jobGroup +']').prop('selected', true);
+		$("#updateModal .form input[name='jobTopic']").val( row.jobTopic );
 		$("#updateModal .form input[name='jobDesc']").val( row.jobDesc );
 		$("#updateModal .form input[name='jobCron']").val( row.jobCron );
 		$("#updateModal .form input[name='author']").val( row.author );
