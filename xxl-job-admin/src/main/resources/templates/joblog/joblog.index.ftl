@@ -50,10 +50,10 @@
                     <div class="input-group">
                         <span class="input-group-addon">${I18n.joblog_status}</span>
                         <select class="form-control" id="logStatus" >
-                            <option value="-1" >${I18n.joblog_status_all}</option>
-                            <option value="1" >${I18n.joblog_status_suc}</option>
                             <option value="2" >${I18n.joblog_status_fail}</option>
+                            <option value="1" >${I18n.joblog_status_suc}</option>
                             <option value="3" >${I18n.joblog_status_running}</option>
+                            <option value="-1" >${I18n.joblog_status_all}</option>
                         </select>
                     </div>
                 </div>

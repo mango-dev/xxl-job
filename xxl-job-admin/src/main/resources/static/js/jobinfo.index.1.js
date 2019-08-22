@@ -142,7 +142,7 @@ $(function() {
                                     '     <ul class="dropdown-menu" role="menu" _id="'+ row.id +'" >\n' +
                                     '       <li><a href="javascript:void(0);" class="job_trigger" >'+ I18n.jobinfo_opt_run +'</a></li>\n' +
                                     start_stop_div +
-                                    '       <li><a href="'+ logHref +'">'+ I18n.jobinfo_opt_log +'</a></li>\n' +
+                                    '       <li><a href="'+ logHref +'" target="_blank">'+ I18n.jobinfo_opt_log +'</a></li>\n' +
                                     '       <li class="divider"></li>\n' +
                                     codeBtn +
                                     '       <li><a href="javascript:void(0);" class="update" >'+ I18n.system_opt_edit +'</a></li>\n' +
