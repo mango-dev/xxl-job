@@ -50,7 +50,12 @@ public class JobInfoController {
 
 		// 执行器列表
 		List<XxlJobGroup> jobGroupList_all =  xxlJobGroupDao.findAll();
-
+		XxlJobGroup allGroup=new XxlJobGroup();
+		allGroup.setId(0);
+		allGroup.setTitle("全部");
+		allGroup.setAppName("All");
+		allGroup.setOrder(0);
+		jobGroupList_all.add(0,allGroup);
 		// filter group
 		List<XxlJobGroup> jobGroupList = filterJobGroupByRole(request, jobGroupList_all);
 		if (jobGroupList==null || jobGroupList.size()==0) {
