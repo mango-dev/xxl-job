@@ -26,25 +26,23 @@
 		<!-- Main content -->
 	    <section class="content">
 	    	<div class="row">
-	    		<div class="col-xs-2">
- 					<div class="input-group">
-	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>
-                		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >
-                            <#if Request["XXL_JOB_LOGIN_IDENTITY"].role == 1>
-                                <option value="0" >${I18n.system_all}</option>  <#-- 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup -->
-                            </#if>
-                			<#list JobGroupList as group>
-                				<option value="${group.id}" >${group.title}</option>
-                			</#list>
-	                  	</select>
-	              	</div>
-	            </div>
+<#--	    		<div class="col-xs-2">-->
+<#-- 					<div class="input-group">-->
+<#--	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>-->
+<#--                		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >-->
+<#--                            <#if Request["XXL_JOB_LOGIN_IDENTITY"].role == 1>-->
+<#--                                <option value="0" >${I18n.system_all}</option>  &lt;#&ndash; 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup &ndash;&gt;-->
+<#--                            </#if>-->
+<#--                			<#list JobGroupList as group>-->
+<#--                				<option value="${group.id}" >${group.title}</option>-->
+<#--                			</#list>-->
+<#--	                  	</select>-->
+<#--	              	</div>-->
+<#--	            </div>-->
 	            <div class="col-xs-2">
 	              	<div class="input-group">
-	                	<span class="input-group-addon">${I18n.jobinfo_job}</span>
-                        <select class="form-control" id="jobId" paramVal="<#if jobInfo?exists>${jobInfo.id}</#if>" >
-                            <option value="0" >${I18n.system_all}</option>
-						</select>
+	                	<span class="input-group-addon">${I18n.jobinfo_field_id}</span>
+                        <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" >
 	              	</div>
 	            </div>
 

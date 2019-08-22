@@ -79,7 +79,7 @@ $(function() {
             type:"post",
 	        data : function ( d ) {
 	        	var obj = {};
-	        	obj.jobGroup = $('#jobGroup').val();
+	        	// obj.jobGroup = $('#jobGroup').val();
 	        	obj.jobId = $('#jobId').val();
                 obj.logStatus = $('#logStatus').val();
 				obj.filterTime = $('#filterTime').val();
@@ -91,6 +91,7 @@ $(function() {
 	    "searching": false,
 	    "ordering": false,
 	    //"scrollX": false,
+		"pageLength": 100,
 	    "columns":[
 			{
 				"data": 'jobId',

@@ -12,6 +12,7 @@ $(function() {
 	        	var obj = {};
 	        	obj.jobGroup = $('#jobGroup').val();
                 obj.triggerStatus = $('#triggerStatus').val();
+				obj.id=$('#id').val();
 				obj.jobTopic = $('#jobTopic').val();
                 obj.jobDesc = $('#jobDesc').val();
 	        	obj.executorHandler = $('#executorHandler').val();
@@ -24,6 +25,7 @@ $(function() {
 	    "searching": false,
 	    "ordering": false,
 	    //"scrollX": true,	// scroll x，close self-adaption
+		"pageLength": 100,
 	    "columns": [
 	                {
 	                	"data": 'id',

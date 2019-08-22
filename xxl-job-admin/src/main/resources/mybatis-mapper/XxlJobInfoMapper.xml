@@ -72,6 +72,9 @@
             <if test="triggerStatus gte 0">
                 AND t.trigger_status = #{triggerStatus}
             </if>
+			<if test="id != null and id != 0">
+				AND t.id = #{id}
+			</if>
 			<if test="jobTopic != null and jobTopic != ''">
 				AND t.job_topic like CONCAT(CONCAT('%', #{jobTopic}), '%')
 			</if>
@@ -99,6 +102,9 @@
             <if test="triggerStatus gte 0">
                 AND t.trigger_status = #{triggerStatus}
             </if>
+			<if test="id != null and id != 0">
+				AND t.id = #{id}
+			</if>
 			<if test="jobTopic != null and jobTopic != ''">
 				AND t.job_topic like CONCAT(CONCAT('%', #{jobTopic}), '%')
 			</if>

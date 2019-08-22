@@ -86,7 +86,7 @@ public class JobLogController {
 	public Map<String, Object> pageList(HttpServletRequest request,
 										@RequestParam(required = false, defaultValue = "0") int start,
 										@RequestParam(required = false, defaultValue = "10") int length,
-										int jobGroup, int jobId, int logStatus, String filterTime) {
+										@RequestParam(required = false, defaultValue = "0")int jobGroup, @RequestParam(required = false, defaultValue = "0")int jobId, int logStatus, String filterTime) {
 
 		// valid permission
 		JobInfoController.validPermission(request, jobGroup);	// 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup

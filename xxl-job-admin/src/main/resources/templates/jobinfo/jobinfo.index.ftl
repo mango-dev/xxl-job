@@ -36,14 +36,21 @@
 	              	</div>
 	            </div>
                 <div class="col-xs-1">
-                    <div class="input-group">
-                        <select class="form-control" id="triggerStatus" >
+                    <div class="input-group"  style="width: 100%" >
+                        <select class="form-control" id="triggerStatus">
                             <option value="-1" >${I18n.system_all}</option>
                             <option value="0" >${I18n.jobinfo_opt_stop}</option>
                             <option value="1" >${I18n.jobinfo_opt_start}</option>
                         </select>
                     </div>
                 </div>
+
+                <div class="col-xs-1">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" >
+                    </div>
+                </div>
+
                 <div class="col-xs-1">
                     <div class="input-group">
                         <input type="text" class="form-control" id="jobTopic" autocomplete="on" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_jobtopic}" >
@@ -54,16 +61,16 @@
                         <input type="text" class="form-control" id="jobDesc" autocomplete="on" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_jobdesc}" >
                     </div>
                 </div>
-                <div class="col-xs-1">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="executorHandler" autocomplete="on" placeholder="${I18n.system_please_input}JobHandler" >
-                    </div>
-                </div>
-                <div class="col-xs-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="author" autocomplete="on" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" >
-                    </div>
-                </div>
+<#--                <div class="col-xs-1">-->
+<#--                    <div class="input-group">-->
+<#--                        <input type="text" class="form-control" id="executorHandler" autocomplete="on" placeholder="${I18n.system_please_input}JobHandler" >-->
+<#--                    </div>-->
+<#--                </div>-->
+<#--                <div class="col-xs-2">-->
+<#--                    <div class="input-group">-->
+<#--                        <input type="text" class="form-control" id="author" autocomplete="on" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" >-->
+<#--                    </div>-->
+<#--                </div>-->
 	            <div class="col-xs-1">
 	            	<button class="btn btn-block btn-info" id="searchBtn">${I18n.system_search}</button>
 	            </div>
