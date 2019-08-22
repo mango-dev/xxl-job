@@ -47,7 +47,7 @@
 
                 <div class="col-xs-1">
                     <div class="input-group">
-                        <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" >
+                        <input type="number" class="form-control" id="id"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" >
                     </div>
                 </div>
 
