@@ -42,7 +42,7 @@
 	            <div class="col-xs-2">
 	              	<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_field_id}</span>
-                        <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" value="${jobInfo.id}" >
+                        <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" value="<#if jobInfo?exists>${jobInfo.id}</#if>" >
 	              	</div>
 	            </div>
 
