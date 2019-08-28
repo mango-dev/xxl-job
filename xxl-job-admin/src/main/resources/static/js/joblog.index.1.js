@@ -233,6 +233,7 @@ $(function() {
 	// logTips alert
 	$('#joblog_list').on('click', '.logTips', function(){
 		var msg = $(this).find('span').html();
+		msg=msg.replace(/\n/g, "<br/>").replace(/\\n/g,'<br/>')
 		ComAlertTec.show(msg);
 	});
 	
