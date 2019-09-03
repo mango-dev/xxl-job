@@ -122,8 +122,12 @@
 
 	<select id="pageList2" resultMap="XxlJobLog2">
 		SELECT <include refid="Base_Column_List2" /> FROM  ( select  jl.*,ji.job_desc
-		FROM xxl_job_log jl join  xxl_job_info ji on jl.job_id = ji.id)  t
+		FROM xxl_job_log jl join  xxl_job_info ji on jl.job_id = ji.id) as  t join  xxl_job_info as i
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+
+			<if test="author!=null and author!='' ">
+				AND i.author = #{author}
+			</if>
 			<if test="jobId==0 and jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
 			</if>
@@ -156,8 +160,11 @@
 	
 	<select id="pageListCount" resultType="int">
 		SELECT count(1)
-		FROM xxl_job_log AS t
+		FROM xxl_job_log AS t join  xxl_job_info as i
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="author!=null and author!='' ">
+				AND i.author = #{author}
+			</if>
 			<if test="jobId==0 and jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
 			</if>

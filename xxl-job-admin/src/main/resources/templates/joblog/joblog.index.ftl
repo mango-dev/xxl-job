@@ -39,14 +39,11 @@
 <#--	                  	</select>-->
 <#--	              	</div>-->
 <#--	            </div>-->
-	            <div class="col-xs-2">
-	              	<div class="input-group">
-	                	<span class="input-group-addon">${I18n.jobinfo_field_id}</span>
+	            <div class="col-md-2">
                         <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" value="<#if jobInfo?exists>${jobInfo.id}</#if>" >
-	              	</div>
 	            </div>
 
-                <div class="col-xs-2">
+                <div class="col-md-2">
                     <div class="input-group">
                         <span class="input-group-addon">${I18n.joblog_status}</span>
                         <select class="form-control" id="logStatus" >
@@ -57,8 +54,10 @@
                         </select>
                     </div>
                 </div>
-
-	            <div class="col-xs-4">
+                <div class="col-md-2 col-lg-2">
+                    <input type="text" class="form-control" id="author" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" >
+                </div>
+	            <div class="col-md-4">
               		<div class="input-group">
                 		<span class="input-group-addon">
 	                  		${I18n.joblog_field_triggerTime}
@@ -67,11 +66,11 @@
 	              	</div>
 	            </div>
 
-                <div class="col-xs-1">
+                <div class="col-md-1">
                     <button class="btn btn-block btn-info" id="searchBtn">${I18n.system_search}</button>
                 </div>
 
-	            <div class="col-xs-1">
+	            <div class="col-md-1">
                     <button class="btn btn-block btn-nomal" id="clearLog">${I18n.joblog_clean}</button>
 	            </div>
           	</div>
