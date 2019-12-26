@@ -58,7 +58,7 @@ public class ExecutorBizTest {
         referenceBean.setIface(ExecutorBiz.class);
         referenceBean.setVersion(null);
         referenceBean.setTimeout(3000);
-        referenceBean.setAddress("127.0.0.1:9999");
+        referenceBean.setAddress("127.0.0.1:8080");
         referenceBean.setAccessToken(accessToken);
         referenceBean.setInvokeCallback(null);
         referenceBean.setInvokerFactory(null);

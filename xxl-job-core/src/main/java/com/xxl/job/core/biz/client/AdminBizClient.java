@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class AdminBizClient implements AdminBiz {
 
-    public AdminBizClient() {
-    }
     public AdminBizClient(String addressUrl, String accessToken) {
         this.addressUrl = addressUrl;
         this.accessToken = accessToken;

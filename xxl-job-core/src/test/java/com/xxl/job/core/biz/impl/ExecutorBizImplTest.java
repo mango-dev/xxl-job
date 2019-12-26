@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ExecutorBizImplTest {
 
-    public XxlJobExecutor xxlJobExecutor = null;
-    public ExecutorBiz executorBiz = null;
+    private XxlJobExecutor xxlJobExecutor = null;
+    private ExecutorBiz executorBiz = null;
 
     @Before
     public void before() throws Exception {
