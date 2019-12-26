@@ -42,11 +42,11 @@ public class XxlJobServiceImpl implements XxlJobService {
 	private XxlJobLogReportDao xxlJobLogReportDao;
 	
 	@Override
-	public Map<String, Object> pageList(int start, int length, int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author) {
+	public Map<String, Object> pageList(int start, int length, int id, int jobGroup, int triggerStatus, String jobTopic, String jobDesc, String executorHandler, String author) {
 
 		// page list
-		List<XxlJobInfo> list = xxlJobInfoDao.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
-		int list_count = xxlJobInfoDao.pageListCount(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
+		List<XxlJobInfo> list = xxlJobInfoDao.pageList(start, length, jobGroup, triggerStatus,id, jobTopic,jobDesc, executorHandler, author);
+		int list_count = xxlJobInfoDao.pageListCount(start, length, jobGroup, triggerStatus, id,jobTopic,jobDesc, executorHandler, author);
 		
 		// package result
 		Map<String, Object> maps = new HashMap<String, Object>();
@@ -107,13 +107,13 @@ public class XxlJobServiceImpl implements XxlJobService {
 			}
 
 			// join , avoid "xxx,,"
-			String temp = "";
+			StringBuilder temp = new StringBuilder();
 			for (String item:childJobIds) {
-				temp += item + ",";
+				temp.append(item).append(",");
 			}
-			temp = temp.substring(0, temp.length()-1);
+			temp = new StringBuilder(temp.substring(0, temp.length() - 1));
 
-			jobInfo.setChildJobId(temp);
+			jobInfo.setChildJobId(temp.toString());
 		}
 
 		// add in db
@@ -130,7 +130,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 
 	private boolean isNumeric(String str){
 		try {
-			int result = Integer.valueOf(str);
+			int result = Integer.parseInt(str);
 			return true;
 		} catch (NumberFormatException e) {
 			return false;
@@ -142,19 +142,19 @@ public class XxlJobServiceImpl implements XxlJobService {
 
 		// valid
 		if (!CronExpression.isValidExpression(jobInfo.getJobCron())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, I18nUtil.getString("jobinfo_field_cron_unvalid") );
+			return new ReturnT<>(ReturnT.FAIL_CODE, I18nUtil.getString("jobinfo_field_cron_unvalid"));
 		}
 		if (jobInfo.getJobDesc()==null || jobInfo.getJobDesc().trim().length()==0) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input")+I18nUtil.getString("jobinfo_field_jobdesc")) );
+			return new ReturnT<>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobinfo_field_jobdesc")));
 		}
 		if (jobInfo.getAuthor()==null || jobInfo.getAuthor().trim().length()==0) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input")+I18nUtil.getString("jobinfo_field_author")) );
+			return new ReturnT<>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobinfo_field_author")));
 		}
 		if (ExecutorRouteStrategyEnum.match(jobInfo.getExecutorRouteStrategy(), null) == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_executorRouteStrategy")+I18nUtil.getString("system_unvalid")) );
+			return new ReturnT<>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_executorRouteStrategy") + I18nUtil.getString("system_unvalid")));
 		}
 		if (ExecutorBlockStrategyEnum.match(jobInfo.getExecutorBlockStrategy(), null) == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_executorBlockStrategy")+I18nUtil.getString("system_unvalid")) );
+			return new ReturnT<>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_executorBlockStrategy") + I18nUtil.getString("system_unvalid")));
 		}
 
 		// ChildJobId valid
@@ -174,13 +174,13 @@ public class XxlJobServiceImpl implements XxlJobService {
 			}
 
 			// join , avoid "xxx,,"
-			String temp = "";
+			StringBuilder temp = new StringBuilder();
 			for (String item:childJobIds) {
-				temp += item + ",";
+				temp.append(item).append(",");
 			}
-			temp = temp.substring(0, temp.length()-1);
+			temp = new StringBuilder(temp.substring(0, temp.length() - 1));
 
-			jobInfo.setChildJobId(temp);
+			jobInfo.setChildJobId(temp.toString());
 		}
 
 		// group valid
@@ -213,6 +213,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 		exists_jobInfo.setJobGroup(jobInfo.getJobGroup());
 		exists_jobInfo.setJobCron(jobInfo.getJobCron());
 		exists_jobInfo.setJobDesc(jobInfo.getJobDesc());
+		exists_jobInfo.setJobTopic(jobInfo.getJobTopic());
 		exists_jobInfo.setAuthor(jobInfo.getAuthor());
 		exists_jobInfo.setAlarmEmail(jobInfo.getAlarmEmail());
 		exists_jobInfo.setExecutorRouteStrategy(jobInfo.getExecutorRouteStrategy());

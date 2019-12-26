@@ -56,39 +56,39 @@ public class AdminBizImpl implements AdminBiz {
         // valid log item
         XxlJobLog log = xxlJobLogDao.load(handleCallbackParam.getLogId());
         if (log == null) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "log item not found.");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "log item not found.");
         }
         if (log.getHandleCode() > 0) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "log repeate callback.");     // avoid repeat callback, trigger child job etc
+            return new ReturnT<>(ReturnT.FAIL_CODE, "log repeate callback.");     // avoid repeat callback, trigger child job etc
         }
 
         // trigger success, to trigger child job
-        String callbackMsg = null;
+        StringBuilder callbackMsg = null;
         if (IJobHandler.SUCCESS.getCode() == handleCallbackParam.getExecuteResult().getCode()) {
             XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(log.getJobId());
             if (xxlJobInfo!=null && xxlJobInfo.getChildJobId()!=null && xxlJobInfo.getChildJobId().trim().length()>0) {
-                callbackMsg = "<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>"+ I18nUtil.getString("jobconf_trigger_child_run") +"<<<<<<<<<<< </span><br>";
+                callbackMsg = new StringBuilder("<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>" + I18nUtil.getString("jobconf_trigger_child_run") + "<<<<<<<<<<< </span><br>");
 
                 String[] childJobIds = xxlJobInfo.getChildJobId().split(",");
                 for (int i = 0; i < childJobIds.length; i++) {
-                    int childJobId = (childJobIds[i]!=null && childJobIds[i].trim().length()>0 && isNumeric(childJobIds[i]))?Integer.valueOf(childJobIds[i]):-1;
+                    int childJobId = (childJobIds[i]!=null && childJobIds[i].trim().length()>0 && isNumeric(childJobIds[i]))?Integer.parseInt(childJobIds[i]):-1;
                     if (childJobId > 0) {
 
                         JobTriggerPoolHelper.trigger(childJobId, TriggerTypeEnum.PARENT, -1, null, null);
                         ReturnT<String> triggerChildResult = ReturnT.SUCCESS;
 
                         // add msg
-                        callbackMsg += MessageFormat.format(I18nUtil.getString("jobconf_callback_child_msg1"),
-                                (i+1),
+                        callbackMsg.append(MessageFormat.format(I18nUtil.getString("jobconf_callback_child_msg1"),
+                                (i + 1),
                                 childJobIds.length,
                                 childJobIds[i],
-                                (triggerChildResult.getCode()==ReturnT.SUCCESS_CODE?I18nUtil.getString("system_success"):I18nUtil.getString("system_fail")),
-                                triggerChildResult.getMsg());
+                                (triggerChildResult.getCode() == ReturnT.SUCCESS_CODE ? I18nUtil.getString("system_success") : I18nUtil.getString("system_fail")),
+                                triggerChildResult.getMsg()));
                     } else {
-                        callbackMsg += MessageFormat.format(I18nUtil.getString("jobconf_callback_child_msg2"),
-                                (i+1),
+                        callbackMsg.append(MessageFormat.format(I18nUtil.getString("jobconf_callback_child_msg2"),
+                                (i + 1),
                                 childJobIds.length,
-                                childJobIds[i]);
+                                childJobIds[i]));
                     }
                 }
 
@@ -96,7 +96,7 @@ public class AdminBizImpl implements AdminBiz {
         }
 
         // handle msg
-        StringBuffer handleMsg = new StringBuffer();
+        StringBuilder handleMsg = new StringBuilder();
         if (log.getHandleMsg()!=null) {
             handleMsg.append(log.getHandleMsg()).append("<br>");
         }
@@ -118,7 +118,7 @@ public class AdminBizImpl implements AdminBiz {
 
     private boolean isNumeric(String str){
         try {
-            int result = Integer.valueOf(str);
+            Integer.parseInt(str);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -152,7 +152,7 @@ public class AdminBizImpl implements AdminBiz {
         if (!StringUtils.hasText(registryParam.getRegistryGroup())
                 || !StringUtils.hasText(registryParam.getRegistryKey())
                 || !StringUtils.hasText(registryParam.getRegistryValue())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "Illegal Argument.");
         }
 
         int ret = xxlJobRegistryDao.registryDelete(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue());

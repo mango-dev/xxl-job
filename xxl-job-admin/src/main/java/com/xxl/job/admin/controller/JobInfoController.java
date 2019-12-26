@@ -50,7 +50,12 @@ public class JobInfoController {
 
 		// 执行器列表
 		List<XxlJobGroup> jobGroupList_all =  xxlJobGroupDao.findAll();
-
+		XxlJobGroup allGroup=new XxlJobGroup();
+		allGroup.setId(0);
+		allGroup.setTitle("全部");
+		allGroup.setAppName("All");
+		allGroup.setOrder(0);
+		jobGroupList_all.add(allGroup);
 		// filter group
 		List<XxlJobGroup> jobGroupList = filterJobGroupByRole(request, jobGroupList_all);
 		if (jobGroupList==null || jobGroupList.size()==0) {
@@ -92,11 +97,10 @@ public class JobInfoController {
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,  
-			@RequestParam(required = false, defaultValue = "10") int length,
-			int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author) {
-		
-		return xxlJobService.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
+	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam(required = false, defaultValue = "10") int length,
+			int jobGroup, int triggerStatus, @RequestParam(required = false, defaultValue = "0")int id, String jobTopic,
+										String jobDesc, String executorHandler, String author) {
+		return xxlJobService.pageList(start, length, id,jobGroup, triggerStatus, jobTopic,jobDesc, executorHandler, author);
 	}
 	
 	@RequestMapping("/add")
