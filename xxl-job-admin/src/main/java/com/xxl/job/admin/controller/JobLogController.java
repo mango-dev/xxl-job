@@ -193,7 +193,7 @@ public class JobLogController {
 	public ReturnT<String> clearLog(int jobGroup, int jobId, int type){
 
 		Date clearBeforeTime = null;
-		int clearBeforeNum = 0;
+		int clearBeforeNum = -1;
 		if (type == 1) {
 			clearBeforeTime = DateUtil.addMonths(new Date(), -1);	// 清理一个月之前日志数据
 		} else if (type == 2) {
@@ -213,10 +213,10 @@ public class JobLogController {
 		} else if (type == 9) {
 			clearBeforeNum = 0;			// 清理所有日志数据
 		} else {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, I18nUtil.getString("joblog_clean_type_unvalid"));
+			return new ReturnT<>(ReturnT.FAIL_CODE, I18nUtil.getString("joblog_clean_type_unvalid"));
 		}
 
-		List<Long> logIds = null;
+		List<Long> logIds;
 		do {
 			logIds = xxlJobLogDao.findClearLogIds(jobGroup, jobId, clearBeforeTime, clearBeforeNum, 1000);
 			if (logIds!=null && logIds.size()>0) {

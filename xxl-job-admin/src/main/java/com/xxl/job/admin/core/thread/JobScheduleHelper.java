@@ -59,7 +59,7 @@ public class JobScheduleHelper {
                     long start = System.currentTimeMillis();
 
                     Connection conn = null;
-                    Boolean connAutoCommit = null;
+                    boolean connAutoCommit = false;
                     PreparedStatement preparedStatement = null;
 
                     boolean preReadSuc = true;
@@ -143,7 +143,7 @@ public class JobScheduleHelper {
 
                     } catch (Exception e) {
                         if (!scheduleThreadToStop) {
-                            logger.error(">>>>>>>>>>> xxl-job, JobScheduleHelper#scheduleThread error:{}", e);
+                            logger.error(">>>>>>>>>>> xxl-job, JobScheduleHelper#scheduleThread error:{0}", e);
                         }
                     } finally {
 

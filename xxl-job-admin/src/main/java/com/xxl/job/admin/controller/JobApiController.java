@@ -71,6 +71,7 @@ public class JobApiController {
     @RequestMapping("/callback")
     @ResponseBody
     @PermissionLimit(limit=false)
+    @SuppressWarnings("unchecked")
     public ReturnT<String> callback(HttpServletRequest request, @RequestBody(required = false) String data) {
         // valid
         validAccessToken(request);

@@ -63,8 +63,7 @@ public class ExecutorRouteLRU extends ExecutorRouter {
 
         // load
         String eldestKey = lruItem.entrySet().iterator().next().getKey();
-        String eldestValue = lruItem.get(eldestKey);
-        return eldestValue;
+        return lruItem.get(eldestKey);
     }
 
     @Override

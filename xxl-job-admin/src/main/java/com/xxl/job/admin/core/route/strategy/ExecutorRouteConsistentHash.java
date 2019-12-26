@@ -5,6 +5,7 @@ import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.biz.model.TriggerParam;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.TreeMap;
  */
 public class ExecutorRouteConsistentHash extends ExecutorRouter {
 
-    private static int VIRTUAL_NODE_NUM = 5;
+    private static final int VIRTUAL_NODE_NUM = 5;
 
     /**
      * get hash code on 2^32 ring (md5散列的方式计算hash值)
@@ -37,11 +38,7 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
         }
         md5.reset();
         byte[] keyBytes = null;
-        try {
-            keyBytes = key.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Unknown string :" + key, e);
-        }
+        keyBytes = key.getBytes(StandardCharsets.UTF_8);
 
         md5.update(keyBytes);
         byte[] digest = md5.digest();
@@ -52,11 +49,10 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
                 | ((long) (digest[1] & 0xFF) << 8)
                 | (digest[0] & 0xFF);
 
-        long truncateHashCode = hashCode & 0xffffffffL;
-        return truncateHashCode;
+        return hashCode & 0xffffffffL;
     }
 
-    public String hashJob(int jobId, List<String> addressList) {
+    private String hashJob(int jobId, List<String> addressList) {
 
         // ------A1------A2-------A3------
         // -----------J1------------------

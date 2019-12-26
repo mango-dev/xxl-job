@@ -87,7 +87,7 @@ public class JobFailMonitorHelper {
 
 					} catch (Exception e) {
 						if (!toStop) {
-							logger.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
+							logger.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{0}", e);
 						}
 					}
 
@@ -150,6 +150,7 @@ public class JobFailMonitorHelper {
 	/**
 	 * fail alarm
 	 *
+	 * @param info
 	 * @param jobLog
 	 */
 	private boolean failAlarm(XxlJobInfo info, XxlJobLog jobLog){
@@ -168,7 +169,7 @@ public class JobFailMonitorHelper {
 			}
 
 			// email info
-			XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(Integer.valueOf(info.getJobGroup()));
+			XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(info.getJobGroup());
 			String personal = I18nUtil.getString("admin_name_full");
 			String title = I18nUtil.getString("jobconf_monitor");
 			String content = MessageFormat.format(mailBodyTemplate,

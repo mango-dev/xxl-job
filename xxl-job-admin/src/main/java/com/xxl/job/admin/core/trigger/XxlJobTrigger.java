@@ -189,8 +189,8 @@ public class XxlJobTrigger {
      * @param address
      * @return
      */
-    public static ReturnT<String> runExecutor(TriggerParam triggerParam, String address){
-        ReturnT<String> runResult = null;
+    private static ReturnT<String> runExecutor(TriggerParam triggerParam, String address){
+        ReturnT<String> runResult;
         try {
             ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(address);
             runResult = executorBiz.run(triggerParam);
