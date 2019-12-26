@@ -47,7 +47,7 @@ public class XxlJobScheduler  {
     }
 
     
-    public void destroy() throws Exception {
+    public void destroy() {
 
         // stop-schedule
         JobScheduleHelper.getInstance().toStop();
