@@ -8,7 +8,7 @@
         <artifactId>xxl-job</artifactId>
         <version>2.1.2</version>
     </parent>
-    <artifactId>xxl-job-executor-sample-springboot</artifactId>
+    <artifactId>xxl-job-executor</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -53,7 +53,6 @@
     </dependencies>
 
     <build>
-        <finalName>xxl-job-executor</finalName>
         <plugins>
             <!-- spring-boot-maven-plugin (提供了直接运行项目的插件：如果是通过parent方式继承spring-boot-starter-parent则不用此插件) -->
             <plugin>

@@ -136,7 +136,7 @@
 		</selectKey>-->
 	</insert>
 
-	<update id="updateTriggerInfo" >
+	<update id="updateTriggerInfo" parameterType="com.xxl.job.admin.core.model.XxlJobLog">
 		UPDATE xxl_job_log
 		SET
 			`trigger_time`= #{triggerTime},
