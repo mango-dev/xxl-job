@@ -150,7 +150,7 @@ public class JobLogController {
 			return logResult;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return new ReturnT<LogResult>(ReturnT.FAIL_CODE, e.getMessage());
+			return new ReturnT<>(ReturnT.FAIL_CODE, e.getMessage());
 		}
 	}
 
@@ -174,7 +174,7 @@ public class JobLogController {
 			runResult = executorBiz.kill(jobInfo.getId());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			runResult = new ReturnT<String>(500, e.getMessage());
+			runResult = new ReturnT<>(500, e.getMessage());
 		}
 
 		if (ReturnT.SUCCESS_CODE == runResult.getCode()) {
@@ -182,9 +182,9 @@ public class JobLogController {
 			log.setHandleMsg( I18nUtil.getString("joblog_kill_log_byman")+":" + (runResult.getMsg()!=null?runResult.getMsg():""));
 			log.setHandleTime(new Date());
 			xxlJobLogDao.updateHandleInfo(log);
-			return new ReturnT<String>(runResult.getMsg());
+			return new ReturnT<>(runResult.getMsg());
 		} else {
-			return new ReturnT<String>(500, runResult.getMsg());
+			return new ReturnT<>(500, runResult.getMsg());
 		}
 	}
 

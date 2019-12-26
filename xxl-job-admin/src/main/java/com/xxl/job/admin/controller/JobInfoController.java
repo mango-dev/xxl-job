@@ -158,9 +158,9 @@ public class JobInfoController {
 				}
 			}
 		} catch (ParseException e) {
-			return new ReturnT<List<String>>(ReturnT.FAIL_CODE, I18nUtil.getString("jobinfo_field_cron_unvalid"));
+			return new ReturnT<>(ReturnT.FAIL_CODE, I18nUtil.getString("jobinfo_field_cron_unvalid"));
 		}
-		return new ReturnT<List<String>>(result);
+		return new ReturnT<>(result);
 	}
 	
 }

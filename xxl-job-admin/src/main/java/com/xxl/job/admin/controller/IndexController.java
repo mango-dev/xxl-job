@@ -45,8 +45,7 @@ public class IndexController {
     @RequestMapping("/chartInfo")
 	@ResponseBody
 	public ReturnT<Map<String, Object>> chartInfo(Date startDate, Date endDate) {
-        ReturnT<Map<String, Object>> chartInfo = xxlJobService.chartInfo(startDate, endDate);
-        return chartInfo;
+		return xxlJobService.chartInfo(startDate, endDate);
     }
 	
 	@RequestMapping("/toLogin")
@@ -62,7 +61,7 @@ public class IndexController {
 	@ResponseBody
 	@PermissionLimit(limit=false)
 	public ReturnT<String> loginDo(HttpServletRequest request, HttpServletResponse response, String userName, String password, String ifRemember){
-		boolean ifRem = (ifRemember!=null && ifRemember.trim().length()>0 && "on".equals(ifRemember))?true:false;
+		boolean ifRem = ifRemember != null && ifRemember.trim().length() > 0 && "on".equals(ifRemember);
 		return loginService.login(request, response, userName, password, ifRem);
 	}
 	
