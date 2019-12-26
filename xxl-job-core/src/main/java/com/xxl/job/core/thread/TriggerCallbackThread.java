@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -62,17 +63,15 @@ public class TriggerCallbackThread {
                 while(!toStop){
                     try {
                         HandleCallbackParam callback = getInstance().callBackQueue.take();
-                        if (callback != null) {
 
-                            // callback list param
-                            List<HandleCallbackParam> callbackParamList = new ArrayList<HandleCallbackParam>();
-                            int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);
-                            callbackParamList.add(callback);
+                        // callback list param
+                        List<HandleCallbackParam> callbackParamList = new ArrayList<HandleCallbackParam>();
+                        int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);
+                        callbackParamList.add(callback);
 
-                            // callback, will retry if error
-                            if (callbackParamList!=null && callbackParamList.size()>0) {
-                                doCallback(callbackParamList);
-                            }
+                        // callback, will retry if error
+                        if (callbackParamList.size() > 0) {
+                            doCallback(callbackParamList);
                         }
                     } catch (Exception e) {
                         if (!toStop) {
@@ -85,7 +84,7 @@ public class TriggerCallbackThread {
                 try {
                     List<HandleCallbackParam> callbackParamList = new ArrayList<HandleCallbackParam>();
                     int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);
-                    if (callbackParamList!=null && callbackParamList.size()>0) {
+                    if (callbackParamList.size() > 0) {
                         doCallback(callbackParamList);
                     }
                 } catch (Exception e) {
@@ -228,12 +227,12 @@ public class TriggerCallbackThread {
         if (callbackLogPath.isFile()) {
             callbackLogPath.delete();
         }
-        if (!(callbackLogPath.isDirectory() && callbackLogPath.list()!=null && callbackLogPath.list().length>0)) {
+        if (!(callbackLogPath.isDirectory() && callbackLogPath.list()!=null && Objects.requireNonNull(callbackLogPath.list()).length>0)) {
             return;
         }
 
         // load and clear file, retry
-        for (File callbaclLogFile: callbackLogPath.listFiles()) {
+        for (File callbaclLogFile: Objects.requireNonNull(callbackLogPath.listFiles())) {
             byte[] callbackParamList_bytes = FileUtil.readFileContent(callbaclLogFile);
             List<HandleCallbackParam> callbackParamList = (List<HandleCallbackParam>) XxlJobExecutor.getSerializer().deserialize(callbackParamList_bytes, HandleCallbackParam.class);
 

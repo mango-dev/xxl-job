@@ -145,6 +145,7 @@ public class JobThread extends Thread{
 
 							executeResult = new ReturnT<String>(IJobHandler.FAIL_TIMEOUT.getCode(), "job execute timeout ");
 						} finally {
+							assert futureThread != null;
 							futureThread.interrupt();
 						}
 					} else {
@@ -156,7 +157,7 @@ public class JobThread extends Thread{
 						executeResult = IJobHandler.FAIL;
 					} else {
 						executeResult.setMsg(
-								(executeResult!=null&&executeResult.getMsg()!=null&&executeResult.getMsg().length()>50000)
+								executeResult.getMsg() != null && executeResult.getMsg().length() > 50000
 										?executeResult.getMsg().substring(0, 50000).concat("...")
 										:executeResult.getMsg());
 						executeResult.setContent(null);	// limit obj size
