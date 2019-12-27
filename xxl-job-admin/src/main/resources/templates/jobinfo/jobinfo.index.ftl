@@ -36,8 +36,8 @@
 	              	</div>
 	            </div>
                 <div class="col-xs-1">
-                    <div class="input-group"  style="width: 100%">
-                        <select class="form-control" id="triggerStatus" >
+                    <div class="input-group"  style="width: 100%" >
+                        <select class="form-control" id="triggerStatus">
                             <option value="-1" >${I18n.system_all}</option>
                             <option value="0" >${I18n.jobinfo_opt_stop}</option>
                             <option value="1" >${I18n.jobinfo_opt_start}</option>
@@ -62,7 +62,7 @@
                         <input type="text" class="form-control" id="jobDesc" autocomplete="on" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_jobdesc}" >
                     </div>
                 </div>
-<#--                <div class="col-xs-2">-->
+<#--                <div class="col-xs-1">-->
 <#--                    <div class="input-group">-->
 <#--                        <input type="text" class="form-control" id="executorHandler" autocomplete="on" placeholder="${I18n.system_please_input}JobHandler" >-->
 <#--                    </div>-->
@@ -92,8 +92,8 @@
 					            	<tr>
 					            		<th name="id" >${I18n.jobinfo_field_id}</th>
 					                	<th name="jobGroup" >${I18n.jobinfo_field_jobgroup}</th>
-					                  	<th name="jobDesc" >${I18n.jobinfo_field_jobdesc}</th>
                                         <th name="jobTopic" >${I18n.jobinfo_field_jobtopic}</th>
+					                  	<th name="jobDesc" >${I18n.jobinfo_field_jobdesc}</th>
                                         <th name="glueType" >${I18n.jobinfo_field_gluetype}</th>
 					                  	<th name="executorParam" >${I18n.jobinfo_field_executorparam}</th>
                                         <th name="jobCron" >Cron</th>
@@ -185,9 +185,13 @@
 					<div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_author}<font color="red">*</font></label>
                         <div class="col-sm-4"><input type="text" class="form-control" name="author" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" maxlength="50" ></div>
-                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_alarmemail}<font color="black">*</font></label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="alarmEmail" placeholder="${I18n.jobinfo_field_alarmemail_placeholder}" maxlength="100" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_jobtopic}<font color="red">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="jobTopic" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_jobtopic}" maxlength="50" ></div>
 					</div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_field_alarmemail}<font color="black">*</font></label>
+                        <div class="col-sm-10"><input type="text" class="form-control" name="alarmEmail" placeholder="${I18n.jobinfo_field_alarmemail_placeholder}" maxlength="100" ></div>
+                    </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">${I18n.jobinfo_field_executorparam}<font color="black">*</font></label>
                         <div class="col-sm-10">
