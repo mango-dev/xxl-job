@@ -25,3 +25,6 @@
 ![avatar](images/86a958e4273bc01b9b46d5dbdb1f0cc.png)<br>
 ![avatar](images/48c84980b1b4f2bcf8abcd8ee41d387.png)<br>
 ![avatar](images/b96cf069475ffc1a17aa609d7de1259.png)<br>
+调度日志新增任务描述
+调度信息新增任务主题
+
