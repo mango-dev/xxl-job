@@ -12,8 +12,12 @@ import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.core.biz.model.ReturnT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JobFailMonitorHelper {
 	private static Logger logger = LoggerFactory.getLogger(JobFailMonitorHelper.class);
-	
+
 	private static JobFailMonitorHelper instance = new JobFailMonitorHelper();
 	public static JobFailMonitorHelper getInstance(){
 		return instance;
@@ -83,7 +87,6 @@ public class JobFailMonitorHelper {
 								} else {
 									newAlarmStatus = 1;
 								}
-
 								XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().updateAlarmStatus(failLogId, -1, newAlarmStatus);
 							}
 						}
@@ -157,8 +160,7 @@ public class JobFailMonitorHelper {
 			+ I18nUtil.getString("jobconf_monitor_alarm_title") +":" +I18nUtil.getString("jobconf_monitor_alarm_type")+"\r\n"
 			+ I18nUtil.getString("jobconf_monitor_alarm_content") +":{3}";
 
-	@Resource
-	private DingTalkRobotClient dingTalkRobotClient;
+
 
 	/**
 	 * fail alarm
@@ -183,58 +185,37 @@ public class JobFailMonitorHelper {
 
 			// email info
 			XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(info.getJobGroup());
-//			String personal = I18nUtil.getString("admin_name_full");
-//			String title = I18nUtil.getString("jobconf_monitor");
-//			String content = MessageFormat.format(mailBodyTemplate,
-//					group!=null?group.getTitle():"null",
-//					info.getId(),
-//					info.getJobDesc(),
-//					alarmContent);
+			String personal = I18nUtil.getString("admin_name_full");
+			String title = I18nUtil.getString("jobconf_monitor");
+			String content = MessageFormat.format(mailBodyTemplate,
+					group!=null?group.getTitle():"null",
+					info.getId(),
+					info.getJobDesc(),
+					alarmContent);
 
-//			Set<String> emailSet = new HashSet<String>(Arrays.asList(info.getAlarmEmail().split(",")));
-//			for (String email: emailSet) {
-//
-//				// make mail
-//				try {
-//					MimeMessage mimeMessage = XxlJobAdminConfig.getAdminConfig().getMailSender().createMimeMessage();
-//
-//					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-//					helper.setFrom(XxlJobAdminConfig.getAdminConfig().getEmailUserName(), personal);
-//					helper.setTo(email);
-//					helper.setSubject(title);
-//					helper.setText(content, true);
-//
-//					XxlJobAdminConfig.getAdminConfig().getMailSender().send(mimeMessage);
-//				} catch (Exception e) {
-//					logger.error(">>>>>>>>>>> xxl-job, job fail alarm email send error, JobLogId:{}", jobLog.getId(), e);
-//
-//					alarmResult = false;
-//				}
-//
-//			}
-
-			//推送至钉钉机器人（此处用email代替钉钉机器人token）
 			Set<String> emailSet = new HashSet<String>(Arrays.asList(info.getAlarmEmail().split(",")));
 			for (String email: emailSet) {
+				// make mail
 				try {
-					String dingContent = MessageFormat.format(dingBodyTemplate,
-							group!=null?group.getTitle():"null",
-							info.getId(),
-							info.getJobDesc(),
-							alarmContent.replace("<br>","\r\n").replace("<span style=\"color:#00c0ef;\" > >>>>>>>>>>>","【").replace("<<<<<<<<<<< </span>","】"));
-					DingTalkResponse response = dingTalkRobotClient.sendMessageByAccessToken(email, new TextMessage(dingContent));
-					logger.info(">>>>>>>>>>> xxl-job, job fail alarm email send success:{}", response);
+					MimeMessage mimeMessage = XxlJobAdminConfig.getAdminConfig().getMailSender().createMimeMessage();
+
+					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+					helper.setFrom(XxlJobAdminConfig.getAdminConfig().getEmailUserName(), personal);
+					helper.setTo(email);
+					helper.setSubject(title);
+					helper.setText(content, true);
+
+					XxlJobAdminConfig.getAdminConfig().getMailSender().send(mimeMessage);
 				} catch (Exception e) {
 					logger.error(">>>>>>>>>>> xxl-job, job fail alarm email send error, JobLogId:{}", jobLog.getId(), e);
-
 					alarmResult = false;
 				}
-
 			}
 		}
 
-		// do something, custom alarm strategy, such as sms
-
+		// dingding
+		//推送至钉钉机器人（此处用email代替钉钉机器人token）
+		XxlJobAdminConfig.getAdminConfig().getDingTalkRobotClient().sendTextMessage("xxxxxxxxxxxxxxxxxxxxxxx");
 
 		return alarmResult;
 	}

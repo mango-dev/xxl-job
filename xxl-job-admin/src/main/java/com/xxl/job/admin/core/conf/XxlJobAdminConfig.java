@@ -1,5 +1,6 @@
 package com.xxl.job.admin.core.conf;
 
+import cn.snowheart.dingtalk.robot.starter.client.DingTalkRobotClient;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.dao.*;
 import org.springframework.beans.factory.DisposableBean;
@@ -81,7 +82,8 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
     private JavaMailSender mailSender;
     @Resource
     private DataSource dataSource;
-
+    @Resource
+    private DingTalkRobotClient dingTalkRobotClient;
 
     public String getI18n() {
         return i18n;
@@ -144,4 +146,7 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
         return dataSource;
     }
 
+    public DingTalkRobotClient getDingTalkRobotClient() {
+        return dingTalkRobotClient;
+    }
 }
