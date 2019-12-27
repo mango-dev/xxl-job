@@ -31,7 +31,7 @@ $(function() {
 	                	"data": 'id',
 						"bSortable": false,
 						"visible" : true,
-						"width":'7%'
+						"width":'10%'
 					},
 	                {
 	                	"data": 'jobGroup',
@@ -46,14 +46,19 @@ $(function() {
 	            			return data;
 	            		}
             		},
+			{
+				"data": 'jobTopic',
+				"visible" : true,
+				"width":'10%'
+			},
 	                {
 	                	"data": 'jobDesc',
 						"visible" : true,
-						"width":'25%'
+						"width":'20%'
 					},
 					{
 						"data": 'glueType',
-						"width":'25%',
+						"width":'20%',
 						"visible" : true,
 						"render": function ( data, type, row ) {
 							var glueTypeTitle = findGlueTypeTitle(row.glueType);
@@ -68,7 +73,7 @@ $(function() {
 					{
 						"data": 'jobCron',
 						"visible" : true,
-						"width":'13%'
+						"width":'10%'
 					},
 	                {
 	                	"data": 'addTime',
@@ -512,6 +517,7 @@ $(function() {
 		// base data
 		$("#updateModal .form input[name='id']").val( row.id );
 		$('#updateModal .form select[name=jobGroup] option[value='+ row.jobGroup +']').prop('selected', true);
+		$("#updateModal .form input[name='jobTopic']").val( row.jobTopic );
 		$("#updateModal .form input[name='jobDesc']").val( row.jobDesc );
 		$("#updateModal .form input[name='jobCron']").val( row.jobCron );
 		$("#updateModal .form input[name='author']").val( row.author );
