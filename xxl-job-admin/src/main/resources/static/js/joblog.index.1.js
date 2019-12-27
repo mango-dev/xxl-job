@@ -122,7 +122,7 @@ $(function() {
 					},
 					{
 						"data": 'triggerTime',
-                        "width":'20%',
+                        "width":'10%',
 						"render": function ( data, type, row ) {
 							return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
 						}
