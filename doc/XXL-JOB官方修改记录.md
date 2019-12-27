@@ -49,3 +49,5 @@ application.properties
       ### 日志保存天数
     xxl.job.logretentiondays=30
 ```
+### 1.3 代码
+- 代码直接使用官方最新源码
