@@ -15,16 +15,8 @@ import java.util.Map;
 @Mapper
 public interface XxlJobLogDao {
 
-	// exist jobId not use jobGroup, not exist use jobGroup
-	public List<XxlJobLog> pageList(@Param("offset") int offset,
-									@Param("pagesize") int pagesize,
-									@Param("jobGroup") int jobGroup,
-									@Param("jobId") int jobId,
-									@Param("triggerTimeStart") Date triggerTimeStart,
-									@Param("triggerTimeEnd") Date triggerTimeEnd,
-									@Param("logStatus") int logStatus);
 
-	public List<XxlJobLog> pageList2(@Param("offset") int offset,
+	public List<XxlJobLog> pageList(@Param("offset") int offset,
 									 @Param("pagesize") int pagesize,
 									 @Param("jobGroup") int jobGroup,
 									 @Param("jobId") int jobId,

@@ -14,7 +14,8 @@ public class XxlJobLog {
 	private int jobGroup;
 	private int jobId;
 	private String jobDesc;
-
+	private String jobTopic;
+	private String author;
 	// execute info
 	private String executorAddress;
 	private String executorHandler;
@@ -34,6 +35,22 @@ public class XxlJobLog {
 
 	// alarm info
 	private int alarmStatus;
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getJobTopic() {
+		return jobTopic;
+	}
+
+	public void setJobTopic(String jobTopic) {
+		this.jobTopic = jobTopic;
+	}
 
 	public String getJobDesc() {
 		return jobDesc;

@@ -26,27 +26,11 @@
 		<result column="alarm_status" property="alarmStatus" />
 	</resultMap>
 
-	<resultMap id="XxlJobLog2" type="com.xxl.job.admin.core.model.XxlJobLog" >
-		<result column="id" property="id" />
-
-		<result column="job_group" property="jobGroup" />
-		<result column="job_id" property="jobId" />
+	<!--拓展结果映射-->
+	<resultMap id="XxlJobLogExpand" type="com.xxl.job.admin.core.model.XxlJobLog" extends="XxlJobLog">
 		<result column="job_desc" property="jobDesc" />
-		<result column="executor_address" property="executorAddress" />
-		<result column="executor_handler" property="executorHandler" />
-		<result column="executor_param" property="executorParam" />
-		<result column="executor_sharding_param" property="executorShardingParam" />
-		<result column="executor_fail_retry_count" property="executorFailRetryCount" />
-
-		<result column="trigger_time" property="triggerTime" />
-		<result column="trigger_code" property="triggerCode" />
-		<result column="trigger_msg" property="triggerMsg" />
-
-		<result column="handle_time" property="handleTime" />
-		<result column="handle_code" property="handleCode" />
-		<result column="handle_msg" property="handleMsg" />
-
-		<result column="alarm_status" property="alarmStatus" />
+		<result column="job_topic" property="jobTopic" />
+		<result column="author" property="author"/>
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -67,66 +51,12 @@
 		t.alarm_status
 	</sql>
 
-	<sql id="Base_Column_List2">
-		t.id,
-		t.job_group,
-		t.job_id,
-		t.job_desc,
-		t.executor_address,
-		t.executor_handler,
-		t.executor_param,
-		t.executor_sharding_param,
-		t.executor_fail_retry_count,
-		t.trigger_time,
-		t.trigger_code,
-		t.trigger_msg,
-		t.handle_time,
-		t.handle_code,
-		t.handle_msg,
-		t.alarm_status
-	</sql>
-
-	<select id="pageList" resultMap="XxlJobLog">
-		SELECT <include refid="Base_Column_List" />
-		FROM xxl_job_log AS t
+	<select id="pageList" resultMap="XxlJobLogExpand">
+		SELECT <include refid="Base_Column_List" />,t1.job_desc,t1.author,t1.job_topic
+		FROM xxl_job_log AS t INNER JOIN  xxl_job_info AS t1 ON t.job_id = t1.id
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
-			<if test="jobId==0 and jobGroup gt 0">
-				AND t.job_group = #{jobGroup}
-			</if>
-			<if test="jobId gt 0">
-				AND t.job_id = #{jobId}
-			</if>
-			<if test="triggerTimeStart != null">
-				AND t.trigger_time <![CDATA[ >= ]]> #{triggerTimeStart}
-			</if>
-			<if test="triggerTimeEnd != null">
-				AND t.trigger_time <![CDATA[ <= ]]> #{triggerTimeEnd}
-			</if>
-			<if test="logStatus == 1" >
-				AND t.handle_code = 200
-			</if>
-			<if test="logStatus == 2" >
-				AND (
-					t.trigger_code NOT IN (0, 200) OR
-					t.handle_code NOT IN (0, 200)
-				)
-			</if>
-			<if test="logStatus == 3" >
-				AND t.trigger_code = 200
-				AND t.handle_code = 0
-			</if>
-		</trim>
-		ORDER BY t.trigger_time DESC
-		LIMIT #{offset}, #{pagesize}
-	</select>
-
-	<select id="pageList2" resultMap="XxlJobLog2">
-		SELECT <include refid="Base_Column_List2" /> FROM  ( select  jl.*,ji.job_desc
-		FROM xxl_job_log jl join  xxl_job_info ji on jl.job_id = ji.id) as  t join  xxl_job_info as i on  t.job_id = i.id
-		<trim prefix="WHERE" prefixOverrides="AND | OR" >
-
 			<if test="author!=null and author!='' ">
-				AND i.author = #{author}
+				AND t1.author = #{author}
 			</if>
 			<if test="jobId==0 and jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
@@ -160,10 +90,10 @@
 
 	<select id="pageListCount" resultType="int">
 		SELECT count(1)
-		FROM xxl_job_log AS t join  xxl_job_info as i on  t.job_id = i.id
+		FROM xxl_job_log AS t join xxl_job_info as t1 on  t.job_id = t1.id
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
 			<if test="author!=null and author!='' ">
-				AND i.author = #{author}
+				AND t1.author = #{author}
 			</if>
 			<if test="jobId==0 and jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
