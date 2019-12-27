@@ -13,6 +13,8 @@ $(function() {
 	        	obj.jobGroup = $('#jobGroup').val();
                 obj.triggerStatus = $('#triggerStatus').val();
                 obj.jobDesc = $('#jobDesc').val();
+				obj.id=$('#id').val();
+				obj.jobTopic = $('#jobTopic').val();
 	        	obj.executorHandler = $('#executorHandler').val();
                 obj.author = $('#author').val();
 	        	obj.start = d.start;
@@ -22,6 +24,7 @@ $(function() {
 	    },
 	    "searching": false,
 	    "ordering": false,
+		"pageLength": 100,
 	    //"scrollX": true,	// scroll x，close self-adaption
 	    "columns": [
 	                {
@@ -134,7 +137,7 @@ $(function() {
                                     '     </button>\n' +
                                     '     <ul class="dropdown-menu" role="menu" _id="'+ row.id +'" >\n' +
                                     '       <li><a href="javascript:void(0);" class="job_trigger" >'+ I18n.jobinfo_opt_run +'</a></li>\n' +
-                                    '       <li><a href="'+ logHref +'">'+ I18n.jobinfo_opt_log +'</a></li>\n' +
+                                    '       <li><a href="'+ logHref +'" target="_blank">'+ I18n.jobinfo_opt_log +'</a></li>\n' +
                                     '       <li><a href="javascript:void(0);" class="job_registryinfo" >' + I18n.jobinfo_opt_registryinfo + '</a></li>\n' +
                                     '       <li><a href="javascript:void(0);" class="job_next_time" >' + I18n.jobinfo_opt_next_time + '</a></li>\n' +
                                     '       <li class="divider"></li>\n' +

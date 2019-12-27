@@ -79,10 +79,11 @@ $(function() {
             type:"post",
 	        data : function ( d ) {
 	        	var obj = {};
-	        	obj.jobGroup = $('#jobGroup').val();
+	        	// obj.jobGroup = $('#jobGroup').val();
 	        	obj.jobId = $('#jobId').val();
                 obj.logStatus = $('#logStatus').val();
 				obj.filterTime = $('#filterTime').val();
+				obj.author=$('#author').val();
 	        	obj.start = d.start;
 	        	obj.length = d.length;
                 return obj;
@@ -90,12 +91,13 @@ $(function() {
 	    },
 	    "searching": false,
 	    "ordering": false,
+		"pageLength": 100,
 	    //"scrollX": false,
 	    "columns": [
 					{
 						"data": 'jobId',
 						"visible" : true,
-                        "width":'10%',
+						"width":'5%',
 						"render": function ( data, type, row ) {
 
 							var jobhandler = '';
@@ -112,6 +114,12 @@ $(function() {
 						}
 					},
 					{ "data": 'jobGroup', "visible" : false},
+					{ "data": 'jobDesc',
+						"width":'20%',
+						"render": function ( data, type, row ) {
+							return data;
+						}
+					},
 					{
 						"data": 'triggerTime',
                         "width":'20%',
@@ -143,7 +151,7 @@ $(function() {
 					},
 	                { 
 	                	"data": 'handleTime',
-                        "width":'20%',
+						"width":'15%',
 	                	"render": function ( data, type, row ) {
 	                		return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
 	                	}
@@ -225,6 +233,7 @@ $(function() {
 	// logTips alert
 	$('#joblog_list').on('click', '.logTips', function(){
 		var msg = $(this).find('span').html();
+		msg=msg.replace(/\n/g, "<br/>").replace(/\\n/g,'<br/>')
 		ComAlertTec.show(msg);
 	});
 	

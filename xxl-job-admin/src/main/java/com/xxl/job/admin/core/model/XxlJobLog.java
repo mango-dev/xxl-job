@@ -13,7 +13,7 @@ public class XxlJobLog {
 	// job info
 	private int jobGroup;
 	private int jobId;
-	private  String jobDesc;
+	private String jobDesc;
 
 	// execute info
 	private String executorAddress;

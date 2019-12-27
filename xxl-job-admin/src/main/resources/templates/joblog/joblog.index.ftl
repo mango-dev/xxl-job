@@ -26,20 +26,23 @@
 		<!-- Main content -->
 	    <section class="content">
 	    	<div class="row">
-	    		<div class="col-xs-2">
- 					<div class="input-group">
-	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>
-                		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >
-                            <#if Request["XXL_JOB_LOGIN_IDENTITY"].role == 1>
-                                <option value="0" >${I18n.system_all}</option>  <#-- 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup -->
-                            </#if>
-                			<#list JobGroupList as group>
-                				<option value="${group.id}" >${group.title}</option>
-                			</#list>
-	                  	</select>
-	              	</div>
-	            </div>
-	            <div class="col-xs-2">
+<#--	    		<div class="col-xs-2">-->
+<#-- 					<div class="input-group">-->
+<#--	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>-->
+<#--                		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >-->
+<#--                            <#if Request["XXL_JOB_LOGIN_IDENTITY"].role == 1>-->
+<#--                                <option value="0" >${I18n.system_all}</option>  &lt;#&ndash; 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup &ndash;&gt;-->
+<#--                            </#if>-->
+<#--                			<#list JobGroupList as group>-->
+<#--                				<option value="${group.id}" >${group.title}</option>-->
+<#--                			</#list>-->
+<#--	                  	</select>-->
+<#--	              	</div>-->
+<#--	            </div>-->
+                <div class="col-md-2">
+                    <input type="number" class="form-control" id="jobId"  placeholder="${I18n.system_please_input}${I18n.jobinfo_field_id}" value="<#if jobInfo??>${jobInfo.id}</#if>" >
+                </div>
+	            <div class="col-md-2">
 	              	<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_job}</span>
                         <select class="form-control" id="jobId" paramVal="<#if jobInfo?exists>${jobInfo.id}</#if>" >
@@ -48,19 +51,21 @@
 	              	</div>
 	            </div>
 
-                <div class="col-xs-2">
+                <div class="col-md-2">
                     <div class="input-group">
                         <span class="input-group-addon">${I18n.joblog_status}</span>
                         <select class="form-control" id="logStatus" >
-                            <option value="-1" >${I18n.joblog_status_all}</option>
-                            <option value="1" >${I18n.joblog_status_suc}</option>
                             <option value="2" >${I18n.joblog_status_fail}</option>
+                            <option value="1" >${I18n.joblog_status_suc}</option>
                             <option value="3" >${I18n.joblog_status_running}</option>
+                            <option value="-1" >${I18n.joblog_status_all}</option>
                         </select>
                     </div>
                 </div>
-
-	            <div class="col-xs-4">
+                <div class="col-md-2 col-lg-2">
+                    <input type="text" class="form-control" id="author" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" >
+                </div>
+	            <div class="col-md-4">
               		<div class="input-group">
                 		<span class="input-group-addon">
 	                  		${I18n.joblog_field_triggerTime}
@@ -69,11 +74,11 @@
 	              	</div>
 	            </div>
 
-                <div class="col-xs-1">
+                <div class="col-md-1">
                     <button class="btn btn-block btn-info" id="searchBtn">${I18n.system_search}</button>
                 </div>
 
-	            <div class="col-xs-1">
+	            <div class="col-md-1">
                     <button class="btn btn-block btn-nomal" id="clearLog">${I18n.joblog_clean}</button>
 	            </div>
           	</div>

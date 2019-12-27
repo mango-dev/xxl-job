@@ -9,6 +9,7 @@
 		<result column="job_group" property="jobGroup" />
 	    <result column="job_cron" property="jobCron" />
 	    <result column="job_desc" property="jobDesc" />
+		<result column="job_topic" property="jobTopic" />
 
 	    <result column="add_time" property="addTime" />
 	    <result column="update_time" property="updateTime" />
@@ -40,6 +41,7 @@
 		t.job_group,
 		t.job_cron,
 		t.job_desc,
+		t.job_topic,
 		t.add_time,
 		t.update_time,
 		t.author,
@@ -67,6 +69,12 @@
 			<if test="jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
 			</if>
+			<if test="id != null and id != 0">
+				AND t.id = #{id}
+			</if>
+			<if test="jobTopic != null and jobTopic != ''">
+				AND t.job_topic like CONCAT(CONCAT('%', #{jobTopic}), '%')
+			</if>
             <if test="triggerStatus gte 0">
                 AND t.trigger_status = #{triggerStatus}
             </if>
@@ -91,6 +99,12 @@
 			<if test="jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
 			</if>
+			<if test="id != null and id != 0">
+				AND t.id = #{id}
+			</if>
+			<if test="jobTopic != null and jobTopic != ''">
+				AND t.job_topic like CONCAT(CONCAT('%', #{jobTopic}), '%')
+			</if>
             <if test="triggerStatus gte 0">
                 AND t.trigger_status = #{triggerStatus}
             </if>
@@ -111,6 +125,7 @@
 			job_group,
 			job_cron,
 			job_desc,
+			job_topic,
 			add_time,
 			update_time,
 			author,
@@ -133,6 +148,7 @@
 			#{jobGroup},
 			#{jobCron},
 			#{jobDesc},
+			#{jobTopic},
 			#{addTime},
 			#{updateTime},
 			#{author},
@@ -170,6 +186,7 @@
 			job_group = #{jobGroup},
 			job_cron = #{jobCron},
 			job_desc = #{jobDesc},
+			job_topic= #{jobTopic},
 			update_time = #{updateTime},
 			author = #{author},
 			alarm_email = #{alarmEmail},
