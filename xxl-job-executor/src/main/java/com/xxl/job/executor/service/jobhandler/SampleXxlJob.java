@@ -43,7 +43,6 @@ public class SampleXxlJob {
             XxlJobLogger.log("beat at:" + i);
             TimeUnit.SECONDS.sleep(2);
         }
-        int a = 1/0;
         return ReturnT.SUCCESS;
     }
 
