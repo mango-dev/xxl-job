@@ -6,20 +6,13 @@ import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.admin.core.util.JacksonUtil;
 import com.xxl.job.admin.dao.XxlJobUserDao;
 import com.xxl.job.core.biz.model.ReturnT;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
-import org.keycloak.representations.IDToken;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
-import java.security.Principal;
-import java.util.Arrays;
 
 /**
  * @author xuxueli 2019-05-04 22:13:264
@@ -79,11 +72,6 @@ public class LoginService {
      * @param response
      */
     public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response){
-        try {
-            request.logout();
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
         CookieUtil.remove(request, response, LOGIN_IDENTITY_KEY);
         return ReturnT.SUCCESS;
     }
@@ -95,7 +83,6 @@ public class LoginService {
      * @return
      */
     public XxlJobUser ifLogin(HttpServletRequest request, HttpServletResponse response){
-        Principal principal = request.getUserPrincipal();
         String cookieToken = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
         if (cookieToken != null) {
             XxlJobUser cookieUser = null;
@@ -105,48 +92,12 @@ public class LoginService {
                 logout(request, response);
             }
             if (cookieUser != null) {
-                if (principal == null) {
-                    XxlJobUser dbUser = xxlJobUserDao.loadByUserName(cookieUser.getUsername());
-                    if (dbUser != null) {
-                        if (cookieUser.getPassword().equals(dbUser.getPassword())) {
-                            return dbUser;
-                        }
+                XxlJobUser dbUser = xxlJobUserDao.loadByUserName(cookieUser.getUsername());
+                if (dbUser != null) {
+                    if (cookieUser.getPassword().equals(dbUser.getPassword())) {
+                        return dbUser;
                     }
-                } else {
-                    return cookieUser;
                 }
-            }
-        } else {
-            if (principal != null) {
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                Object currentPrincipalName = authentication.getDetails();
-                SimpleKeycloakAccount kkAccount = ((SimpleKeycloakAccount) currentPrincipalName);
-                String name = kkAccount.getPrincipal().getName();
-                int roleId = 0;
-                Object[] roles = kkAccount.getRoles().toArray();
-                if (roles.length > 0 && Arrays.asList(roles).contains("admin")) {
-                    roleId = 1;
-                }
-
-                IDToken token = kkAccount.getKeycloakSecurityContext().getToken();
-                String tokenName = token.getName();
-                if (tokenName == null) {
-                    tokenName = name;
-                }
-
-                //赋值
-                XxlJobUser loginUser = null;
-                loginUser = new XxlJobUser();
-                loginUser.setId(1);
-                loginUser.setRole(roleId);
-                loginUser.setUsername(tokenName);
-
-                //写入cookie
-                String loginToken = makeToken(loginUser);
-                // do login
-                CookieUtil.set(response, LOGIN_IDENTITY_KEY, loginToken, false);
-
-                return loginUser;
             }
         }
         return null;
