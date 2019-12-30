@@ -29,6 +29,7 @@
 	              	<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>
                 		<select class="form-control" id="jobGroup" >
+                            <option value="0" selected>全部</option>
                 			<#list JobGroupList as group>
                 				<option value="${group.id}" <#if jobGroup==group.id>selected</#if> >${group.title}</option>
                 			</#list>
