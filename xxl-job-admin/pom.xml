@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.mango</groupId>
 		<artifactId>xxl-job</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>2.1.2</version>
 	</parent>
 
 	<artifactId>xxl-job-admin</artifactId>
@@ -83,11 +83,17 @@
 	</dependencies>
 
 	<build>
-		<finalName>xxl-job-admin</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!--maven打包时跳过单元测试 -->
 			<plugin>
