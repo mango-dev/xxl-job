@@ -26,7 +26,7 @@
 		<!-- Main content -->
 	    <section class="content">
 	    	<div class="row">
-	    		<div class="col-xs-2">
+	    		<div class="col-md-2">
  					<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>
                 		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >
@@ -54,10 +54,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2 col-lg-2">
+                <div class="col-md-2">
                     <input type="text" class="form-control" id="author" placeholder="${I18n.system_please_input}${I18n.jobinfo_field_author}" >
                 </div>
-	            <div class="col-md-4">
+	            <div class="col-md-2">
               		<div class="input-group">
                 		<span class="input-group-addon">
 	                  		${I18n.joblog_field_triggerTime}
