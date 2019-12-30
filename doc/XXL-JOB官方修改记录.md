@@ -16,12 +16,12 @@
       KEY `i_u` (`update_time`)
 ```
 #### 1.1.4 官方2.1.2版本字段进行了修改
-- varchar(50) -> varchar(255)
+-  varchar(255) -> varchar(50)
 ```
    xxl_job_registry
      `registry_group` varchar(255) NOT NULL,
 ```
-- int(11) ->  tinyint(4) 
+-  tinyint(4)  -> int(11)
 ```
    xxl_job_group
     `order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序',
