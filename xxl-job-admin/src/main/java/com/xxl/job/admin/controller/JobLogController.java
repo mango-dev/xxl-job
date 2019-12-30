@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.xxl.job.admin.controller.annotation.PermissionLimit;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.exception.XxlJobException;
 import com.xxl.job.admin.core.model.XxlJobGroup;
@@ -51,7 +52,8 @@ public class JobLogController {
 		List<XxlJobGroup> jobGroupList_all =  xxlJobGroupDao.findAll();
 
 		// filter group
-		List<XxlJobGroup> jobGroupList = JobInfoController.filterJobGroupByRole(request, jobGroupList_all);
+		//List<XxlJobGroup> jobGroupList = JobInfoController.filterJobGroupByRole(request, jobGroupList_all);
+		List<XxlJobGroup> jobGroupList = jobGroupList_all;
 		if (jobGroupList==null || jobGroupList.size()==0) {
 			throw new XxlJobException(I18nUtil.getString("jobgroup_empty"));
 		}
@@ -155,6 +157,7 @@ public class JobLogController {
 
 	@RequestMapping("/logKill")
 	@ResponseBody
+	@PermissionLimit
 	public ReturnT<String> logKill(int id){
 		// base check
 		XxlJobLog log = xxlJobLogDao.load(id);
@@ -189,6 +192,7 @@ public class JobLogController {
 
 	@RequestMapping("/clearLog")
 	@ResponseBody
+	@PermissionLimit
 	public ReturnT<String> clearLog(int jobGroup, int jobId, int type){
 
 		Date clearBeforeTime = null;
