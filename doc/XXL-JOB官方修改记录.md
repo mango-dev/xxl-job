@@ -5,10 +5,10 @@
 - utf8 -> utf8mb4
 #### 1.1.2 官方2.1.2版本数据库时间格式进行了修改
 ![avatar](images/ef807f8cc12aec164bb3b6317b111f4.png)
-- datetime -> timestamp
+- timestamp -> datetime
 ```
-    `add_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+    `add_time` datetime NULL DEFAULT NULL,
+    `update_time` timestamp NULL DEFAULT NULL
 ```
 #### 1.1.3 官方2.1.2版本添加了执行器注册表索引
 ```
