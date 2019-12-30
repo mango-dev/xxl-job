@@ -4,7 +4,9 @@
 ```
     ALTER TABLE `xxl_job_info` ADD COLUMN `job_topic` VARCHAR(10) COMMENT '任务主题' AFTER `job_desc`;
 ```
-### 1.2 代码截图
+### 1.2 功能修改
+
+### 1.3 代码截图
 - jobinfo.index.ftl<br>
 ![avatar](images/1cfe4dcffb4e7d435144fcf9dccdd5f.png)<br>
 ![avatar](images/01ef8732faa503d16c94e2a622d525a.png)<br>
@@ -19,7 +21,7 @@
 ![avatar](images/6d2ddb527fc0637f3d854231301a56a.png)<br>
 ![avatar](images/eca6dc456dfe5a7ed527fcaa2c5190a.png)<br>
 ![avatar](images/07af895c89d124110f487ae8691e1dd.png)<br>
--  joblog.index.1.js<br>
+- joblog.index.1.js<br>
 ![avatar](images/823a1a53ef3479720800d8f6726457d.png)<br>
 ![avatar](images/b706843d83a0a1fba959a082fdc7628.png)<br>
 ![avatar](images/86a958e4273bc01b9b46d5dbdb1f0cc.png)<br>
