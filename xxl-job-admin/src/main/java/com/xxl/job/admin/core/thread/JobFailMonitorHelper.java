@@ -220,8 +220,9 @@ public class JobFailMonitorHelper {
 				//make dingding
 				//推送至钉钉机器人（此处用email代替钉钉机器人token）
 				try {
-					XxlJobAdminConfig.getAdminConfig().getDingTalkRobotClient().
+					DingTalkResponse response = XxlJobAdminConfig.getAdminConfig().getDingTalkRobotClient().
 							sendMessageByAccessToken(email, new TextMessage(dingContent));
+					logger.info(">>>>>>>>>>> xxl-job, job fail alarm email send end:{}", response);
 				} catch (Exception e) {
 					logger.error(">>>>>>>>>>> xxl-job, job fail alarm dingding send error, JobLogId:{}", jobLog.getId(), e);
 					alarmResult = false;
