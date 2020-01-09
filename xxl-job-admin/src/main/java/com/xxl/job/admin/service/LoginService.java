@@ -8,6 +8,7 @@ import com.xxl.job.admin.dao.XxlJobUserDao;
 import com.xxl.job.core.biz.model.ReturnT;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.IDToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +36,8 @@ public class LoginService {
 
     private String makeToken(XxlJobUser xxlJobUser){
         String tokenJson = JacksonUtil.writeValueAsString(xxlJobUser);
-        String tokenHex = new BigInteger(tokenJson.getBytes()).toString(16);
-        return tokenHex;
+        assert tokenJson != null;
+        return new BigInteger(tokenJson.getBytes()).toString(16);
     }
     private XxlJobUser parseToken(String tokenHex){
         XxlJobUser xxlJobUser = null;
@@ -79,11 +80,7 @@ public class LoginService {
      * @param response
      */
     public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response){
-        try {
-            request.logout();
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
+        logoutSSO(request);
         CookieUtil.remove(request, response, LOGIN_IDENTITY_KEY);
         return ReturnT.SUCCESS;
     }
@@ -95,6 +92,37 @@ public class LoginService {
      * @return
      */
     public XxlJobUser ifLogin(HttpServletRequest request, HttpServletResponse response){
+        return checkLoginSSO(request, response);
+    }
+
+    public XxlJobUser checkLogin(HttpServletRequest request, HttpServletResponse response){
+        String cookieToken = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
+        if (cookieToken != null) {
+            XxlJobUser cookieUser = null;
+            try {
+                cookieUser = parseToken(cookieToken);
+            } catch (Exception e) {
+                logout(request, response);
+            }
+            if (cookieUser != null) {
+                XxlJobUser dbUser = xxlJobUserDao.loadByUserName(cookieUser.getUsername());
+                if (dbUser != null) {
+                    if (cookieUser.getPassword().equals(dbUser.getPassword())) {
+                        return dbUser;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * logout
+     *
+     * @param request
+     * @return
+     */
+    private XxlJobUser checkLoginSSO(HttpServletRequest request, HttpServletResponse response){
         Principal principal = request.getUserPrincipal();
         String cookieToken = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
         if (cookieToken != null) {
@@ -152,5 +180,15 @@ public class LoginService {
         return null;
     }
 
-
+    /**]
+     * sso退出
+     * @param request
+     */
+    private void logoutSSO(HttpServletRequest request) {
+        try {
+            request.logout();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+    }
 }

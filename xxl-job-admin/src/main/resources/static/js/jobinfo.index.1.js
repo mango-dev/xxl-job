@@ -1,5 +1,9 @@
 $(function() {
 
+	var groupMenu = {};
+	$("#jobGroup option:not(:first)").each(function () {
+		groupMenu[$(this).val()] = $(this).text();
+	});
 	// init date tables
 	var jobTable = $("#job_list").dataTable({
 		"deferRender": true,
@@ -31,26 +35,24 @@ $(function() {
 	                	"data": 'id',
 						"bSortable": false,
 						"visible" : true,
-						"width":'10%'
+						"width":'5%'
 					},
 	                {
 	                	"data": 'jobGroup',
 	                	"visible" : false,
 	                	"render": function ( data, type, row ) {
-	            			var groupMenu = $("#jobGroup").find("option");
-	            			for ( var index in $("#jobGroup").find("option")) {
-	            				if ($(groupMenu[index]).attr('value') == data) {
-									return $(groupMenu[index]).html();
-								}
+	                		var v = groupMenu[data];
+	                		if(v) {
+	                			return v;
 							}
 	            			return data;
 	            		}
             		},
-			{
-				"data": 'jobTopic',
-				"visible" : true,
-				"width":'10%'
-			},
+					{
+						"data": 'jobTopic',
+						"visible" : true,
+						"width":'10%'
+					},
 	                {
 	                	"data": 'jobDesc',
 						"visible" : true,

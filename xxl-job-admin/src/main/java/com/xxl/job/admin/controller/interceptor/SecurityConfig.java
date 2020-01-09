@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
-public class SecurityConfig  extends KeycloakWebSecurityConfigurerAdapter {
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Bean
     public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
@@ -39,7 +39,7 @@ public class SecurityConfig  extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(keycloakAuthenticationProvider());
     }
 
@@ -51,15 +51,14 @@ public class SecurityConfig  extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
-
         http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/static/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .anyRequest().authenticated();
+            .csrf()
+            .disable()
+            .authorizeRequests()
+            .antMatchers("/", "/api/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin().loginPage("/toLogin").failureForwardUrl("/");
     }
 
     @Bean

@@ -193,8 +193,9 @@ public class JobLogController {
 	@RequestMapping("/clearLog")
 	@ResponseBody
 	@PermissionLimit
-	public ReturnT<String> clearLog(int jobGroup, int jobId, int type){
-
+	public ReturnT<String> clearLog(@RequestParam(required = false, defaultValue = "0") Integer jobGroup,
+			@RequestParam(required = false, defaultValue = "0") Integer jobId,
+			@RequestParam(required = false, defaultValue = "0") Integer type){
 		Date clearBeforeTime = null;
 		int clearBeforeNum = -1;
 		if (type == 1) {
