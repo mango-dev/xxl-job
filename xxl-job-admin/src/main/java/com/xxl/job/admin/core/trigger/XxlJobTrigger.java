@@ -201,7 +201,7 @@ public class XxlJobTrigger {
 
         String runResultSB = I18nUtil.getString("jobconf_trigger_run") + "：" + "<br>address：" + address +
                 "<br>code：" + runResult.getCode() +
-                "<br>msg：" + runResult.getMsg();
+                "<br>msg：" + (runResult.getMsg() == null ? "" : runResult.getMsg()) ;
         runResult.setMsg(runResultSB);
         return runResult;
     }
