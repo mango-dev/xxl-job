@@ -7,6 +7,7 @@ import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticatio
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,6 +24,9 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+
+    @Value("${sso.enabled:false}")
+    private boolean enabled;
 
     @Bean
     public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
@@ -51,14 +55,22 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
-        http
-            .csrf()
-            .disable()
-            .authorizeRequests()
-            .antMatchers("/", "/api/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin().loginPage("/toLogin").failureForwardUrl("/");
+        if(enabled) {
+            http
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers( "/", "/api/**", "/static/**").permitAll()
+                .anyRequest().authenticated();
+        } else {
+            http
+                .csrf()
+                .disable()
+                .authorizeRequests().antMatchers( "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/toLogin").failureForwardUrl("/toLogin").successForwardUrl("/").permitAll();
+        }
     }
 
     @Bean
