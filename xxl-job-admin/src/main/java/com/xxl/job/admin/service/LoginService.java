@@ -95,6 +95,12 @@ public class LoginService {
         return checkLoginSSO(request, response);
     }
 
+    /**
+     * 原始登录校验
+     * @param request
+     * @param response
+     * @return
+     */
     public XxlJobUser checkLogin(HttpServletRequest request, HttpServletResponse response){
         String cookieToken = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
         if (cookieToken != null) {
@@ -117,7 +123,7 @@ public class LoginService {
     }
 
      /**
-     * logout
+     * 支持sso登录
      *
      * @param request
      * @return
@@ -180,8 +186,8 @@ public class LoginService {
         return null;
     }
 
-    /**]
-     * sso退出
+    /**
+     * 支持sso退出
      * @param request
      */
     private void logoutSSO(HttpServletRequest request) {
