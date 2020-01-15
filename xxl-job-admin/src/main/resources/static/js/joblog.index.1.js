@@ -79,7 +79,7 @@ $(function() {
             type:"post",
 	        data : function ( d ) {
 	        	var obj = {};
-	        	// obj.jobGroup = $('#jobGroup').val();
+	        	obj.jobGroup = $('#jobGroup').val();
 	        	obj.jobId = $('#jobId').val();
                 obj.logStatus = $('#logStatus').val();
 				obj.filterTime = $('#filterTime').val();
